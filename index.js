@@ -5,6 +5,12 @@ const { resolve } = require('path');
 // products (data)
 const products = require('./data');
 
+// cart 
+let cart = [
+  { productId: 1, name: 'Laptop', price: 50000, quantity: 1 },
+  { productId: 2, name: 'Mobile', price: 20000, quantity: 2 }
+];
+
 // util functions
 const { capitalizeFirstLetter } = require('./utils');
 const { console } = require('inspector');
@@ -284,6 +290,164 @@ app.get('/products', (req, res) => {
   }
 });
 
+// Endpoint 16: Add an Item to the Cart
+// http://localhost:3000/cart/add?productId=3&name=Tablet&price=15000&quantity=1
+
+app.get('/cart/add', (req, res) => {
+
+  const{productId,name,price,quantity} = req.query;
+
+  try {
+
+    newCartItem = {
+      "productId" : productId ,
+      "name" : name ,
+      "price" : price ,
+      "quantity" : quantity 
+    }
+
+    cart.push(newCartItem)
+
+    res.status(200).json({
+      cartItems: cart,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
+// Endpoint 17: Edit Quantity of an Item in the Cart
+// http://localhost:3000/cart/edit?productId=2&quantity=3
+
+app.get('/cart/edit', (req, res) => {
+
+  const{productId,quantity} = req.query;
+
+  try {
+
+    CartItem = cart.find((product) => product.productId = productId)
+    CartItemIndex = cart.findIndex((product) => product.productId = productId)
+    CartItem.quantity = quantity
+
+    cart[CartItemIndex] = CartItem ;
+
+    res.status(200).json({
+      cartItems: cart,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
+// Endpoint 18 : Delete an Item from the Cart
+// http://localhost:3000/cart/delete?productId=1
+
+app.get('/cart/delete', (req, res) => {
+
+  const{productId} = req.query;
+  console.log(productId)
+
+  try {
+
+    let deletedCart = cart.filter(product => product.productId !== parseFloat(productId));
+    console.log(deletedCart)
+
+    cart = deletedCart
+
+    res.status(200).json({
+      cartItems: deletedCart,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
+// Endpoint 19: Read Items in the Cart
+// http://localhost:3000/cart
+
+app.get('/cart', (req, res) => {
+
+
+  try {
+
+  
+    res.status(200).json({
+      cartItems: cart,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
+// Endpoint 20: Calculate Total Quantity of Items in the Cart
+// http://localhost:3000/cart/total-quantity
+
+app.get('/cart/total-quantity', (req, res) => {
+
+
+  try {
+
+  
+    function getSum(total, product) {
+      return total + product.quantity;
+    }
+
+    let totalQuantity = cart.reduce(getSum,0)
+
+    res.status(200).json({
+      totalQuantity: totalQuantity,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
+// Endpoint 21: Calculate Total Price of Items in the Cart
+// http://localhost:3000/cart/total-price
+
+app.get('/cart/total-price', (req, res) => {
+
+
+  try {
+
+  
+    function getSum(total, product) {
+      return total + product.price;
+    }
+
+    let totalPrice = cart.reduce(getSum,0)
+
+    res.status(200).json({
+      totalPrice: totalPrice,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
 
 
 app.listen(port, () => {
