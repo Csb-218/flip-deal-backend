@@ -330,8 +330,8 @@ app.get('/cart/edit', (req, res) => {
 
   try {
 
-    CartItem = cart.find((product) => product.productId = parseFloat(productId))
-    CartItemIndex = cart.findIndex((product) => product.productId = parseFloat(productId))
+    CartItem = cart.find((product) => product.productId === parseFloat(productId))
+    CartItemIndex = cart.findIndex((product) => product.productId === parseFloat(productId))
     CartItem.quantity = parseFloat(quantity)
 
     cart[CartItemIndex] = CartItem ;
