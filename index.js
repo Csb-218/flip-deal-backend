@@ -353,7 +353,7 @@ app.get('/cart/edit', (req, res) => {
 
 app.get('/cart/delete', (req, res) => {
 
-  const{productId} = req.query;
+  const{productId} = parseFloat(req.query);
   console.log(productId)
 
   try {
