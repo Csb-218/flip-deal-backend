@@ -5,7 +5,8 @@ const { resolve } = require('path');
 // products (data)
 const products = require('./data');
 
-// cart 
+
+// cart  
 let cart = [
   { productId: 1, name: 'Laptop', price: 50000, quantity: 1 },
   { productId: 2, name: 'Mobile', price: 20000, quantity: 2 }
@@ -329,8 +330,8 @@ app.get('/cart/edit', (req, res) => {
 
   try {
 
-    CartItem = cart.find((product) => product.productId = productId)
-    CartItemIndex = cart.findIndex((product) => product.productId = productId)
+    CartItem = cart.find((product) => product.productId = parseFloat(productId))
+    CartItemIndex = cart.findIndex((product) => product.productId = parseFloat(productId))
     CartItem.quantity = quantity
 
     cart[CartItemIndex] = CartItem ;
