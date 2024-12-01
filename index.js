@@ -148,7 +148,7 @@ app.get('/products/filter/ram', (req, res) => {
   const { ram } = req.query;
 
   try {
-    const filteredByRam = products.filter((product) => product.ram === ram);
+    const filteredByRam = products.filter((product) => product.ram === parseFloat(ram));
 
     res.status(200).json({
       products: filteredByRam,
@@ -169,7 +169,7 @@ app.get('/products/filter/rom', (req, res) => {
   const { rom } = req.query;
 
   try {
-    const filteredByRom = products.filter((product) => product.rom === rom);
+    const filteredByRom = products.filter((product) => product.rom === parseFloat(rom));
 
     res.status(200).json({
       products: filteredByRom,
@@ -213,9 +213,20 @@ app.get('/products/filter/os', (req, res) => {
   const { os } = req.query;
 
   try {
-    const filteredByOs = products.filter(
-      (product) => product.os === capitalizeFirstLetter(os)
+
+    let filteredByOs
+
+    if(os === 'iOS'){
+       filteredByOs = products.filter(
+        (product) => product.os === 'iOS'
+      );
+    }
+    else{
+       filteredByOs = products.filter(
+      (product) => product.os === 'Android'
     );
+    }
+    
 
     res.status(200).json({
       products: filteredByOs,
