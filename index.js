@@ -301,10 +301,10 @@ app.get('/cart/add', (req, res) => {
   try {
 
     newCartItem = {
-      "productId" : productId ,
+      "productId" : parseFloat(productId),
       "name" : name ,
-      "price" : price ,
-      "quantity" : quantity 
+      "price" : parseFloat(price) ,
+      "quantity" : parseFloat(quantity ) 
     }
 
     cart.push(newCartItem)
