@@ -405,7 +405,7 @@ app.get('/cart/total-quantity', (req, res) => {
 
   
     function getSum(total, product) {
-      return total + product.quantity;
+      return total + parseFloat(product.quantity);
     }
 
     let totalQuantity = parseFloat(cart.reduce(getSum,0))
@@ -432,7 +432,7 @@ app.get('/cart/total-price', (req, res) => {
 
   
     function getSum(total, product) {
-      return total + product.price;
+      return total + parseFloat(product.price);
     }
 
     let totalPrice = parseFloat(cart.reduce(getSum,0))
