@@ -435,7 +435,7 @@ app.get('/cart/total-price', (req, res) => {
       return total + product.price;
     }
 
-    let totalPrice = cart.reduce(getSum,0)
+    let totalPrice = parseFloat(cart.reduce(getSum,0))
 
     res.status(200).json({
       totalPrice: totalPrice,
