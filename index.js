@@ -7,6 +7,7 @@ const products = require('./data');
 
 // util functions
 const { capitalizeFirstLetter } = require('./utils');
+const { console } = require('inspector');
 
 const app = express();
 app.use(cors())
@@ -216,17 +217,20 @@ app.get('/products/filter/os', (req, res) => {
 
     let filteredByOs
 
-    if(os === 'iOS'){
+    if(os === 'ios'){
+
        filteredByOs = products.filter(
         (product) => product.os === 'iOS'
       );
+
+     
     }
     else{
        filteredByOs = products.filter(
       (product) => product.os === 'Android'
     );
     }
-    
+    console.log(filteredByOs)
 
     res.status(200).json({
       products: filteredByOs,
